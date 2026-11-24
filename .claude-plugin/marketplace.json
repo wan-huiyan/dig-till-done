@@ -1,0 +1,12 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "wan-huiyan-dig-till-done",
+  "description": "Two Claude Code skills for client deliverables: check you answered every ask, then check it lands with AI stand-ins for the client",
+  "owner": { "name": "Huiyan Wan" },
+  "plugins": [{
+    "name": "dig-till-done",
+    "source": "./plugins/dig-till-done",
+    "description": "dig-till-done (loop until every client ask is met or needs a person) + client-stand-ins (AI stand-ins for client staff score each slide on clarity, trust and happiness)",
+    "version": "1.0.0"
+  }]
+}

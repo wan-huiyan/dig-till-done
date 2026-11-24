@@ -1,0 +1,8 @@
+{
+  "name": "dig-till-done",
+  "version": "1.0.0",
+  "description": "Two Claude Code skills for client deliverables: dig-till-done + client-stand-ins",
+  "type": "module",
+  "scripts": { "test": "node --test tests/*.test.mjs" },
+  "license": "MIT"
+}
