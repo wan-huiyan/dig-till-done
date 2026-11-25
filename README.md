@@ -1,20 +1,21 @@
 # dig-till-done + client-stand-ins
 
-Two Claude Code skills for client deliverables (decks, results pages, reports), meant to be used together:
+Two Claude Code skills for client deliverables (decks, results pages, reports). They run as **one loop**, and either
+one can start it:
 
-- **`/dig-till-done`**: did we answer what the client asked? It turns their asks into a checklist and loops until every
-  ask is met or waits on a person, the client or a date.
+- **`/dig-till-done`**: did we answer what the client asked? It turns their asks into a checklist and keeps going in
+  rounds until every ask is met or waits on a person, the client or a date.
 - **`/client-stand-ins`**: will it land? AI stand-ins for the client's own people read the rendered deliverable and
-  score every slide on clarity, trust and happiness. You fix, re-interview and repeat.
+  score every slide on understanding, trust and happiness.
 
 [![license](https://img.shields.io/github/license/wan-huiyan/dig-till-done)](LICENSE)
 [![last commit](https://img.shields.io/github/last-commit/wan-huiyan/dig-till-done)](https://github.com/wan-huiyan/dig-till-done/commits)
 [![Tests](https://github.com/wan-huiyan/dig-till-done/actions/workflows/test.yml/badge.svg)](https://github.com/wan-huiyan/dig-till-done/actions/workflows/test.yml)
 [![Claude Code](https://img.shields.io/badge/Claude_Code-skills-orange)](https://claude.com/claude-code)
 
-![The two loops in 84 seconds](docs/promo.gif)
+![One loop, two skills](docs/promo.gif)
 
-The full 84-second film (silent, words on screen): [docs/promo.mp4](docs/promo.mp4).
+The full 101-second film (silent, words on screen): [docs/promo.mp4](docs/promo.mp4).
 
 ## The pain
 
@@ -46,53 +47,55 @@ Other agents (Cursor, Codex): the two `SKILL.md` files are plain Markdown instru
 
 ## Quick start
 
+Start from the asks:
+
 ```text
-You:    Here are the transcripts of our last two client calls. List every ask and check our draft against them.
-        Keep digging until the checklist is met.          ← /dig-till-done
-...
-You:    Now interview the client stand-ins on the rendered deck.   ← /client-stand-ins
+You:    Here are the transcripts of our last two client calls. List every ask, build the stand-ins,
+        and keep going until the checklist is met.                       ← /dig-till-done
 ```
 
-## How `/dig-till-done` works
+Or start from a draft you already have:
 
-**Step 0, once:** read every transcript and email in full and write `checklist.md`: one row per ask, each with the
-client's own words and the call date. Asks without a quote are marked as inferred.
+```text
+You:    Interview the client stand-ins on this rendered deck.            ← /client-stand-ins
+        (every question the deck cannot answer becomes a checklist row, and the loop carries on)
+```
 
-**Each round:**
+## The loop
 
-| Step | Who | What |
-|---|---|---|
-| Dig | strongest model, one per unmet ask | the analysis that would answer it, in the client's terms |
-| Blind-verify | cheaper model | recompute every figure from source, never from the dig's own tables |
-| Build | strongest model | the next draft, from the last round's problems |
-| Number check | cheaper model | trace every figure to a file, recompute every percentage |
-| Strict re-score | strongest model, **never the builder** | score each ask against what the client will SEE |
-| Defaults | you | one default per open question, so the next round can run; the human can overrule each |
+| Step | What goes in | What comes out | Detail lives in |
+|---|---|---|---|
+| **1. List requirements** (once) | call transcripts, call notes, emails | `checklist.md`: one row per ask, in the client's own words, with the call it came from; one stand-in profile per client person, from the same sources | both |
+| **2. Brainstorm** | the open rows, plus the stand-ins' must-fixes from the last interview | one line per item: what would close it in the client's terms, and whether it needs a new analysis or only a page edit | `/dig-till-done` |
+| **3. Dig** | the brainstorm lines | the analyses, the next draft, and every figure on it traced to a saved file | `/dig-till-done` |
+| **4. Verify, against the list** | the new draft | each new finding redone by another agent without seeing the answer; every row re-scored by an agent that did not build the draft, against what the client will see | `/dig-till-done` |
+| **4. Verify, with the interview** | the rendered draft only | each slide scored 1–5 on understanding, trust and happiness, plus what each stand-in would ask on the call | `/client-stand-ins` |
+| **5. Back to brainstorm** | unmet rows, must-fixes, new stand-in questions | the next round's input; each new question becomes a checklist row (`S01`, …) with the stand-in as its source; one default per open question, which the human can overrule | `/dig-till-done` |
 
-**Stop** when the re-score's "closable now" list comes back **None**: everything left waits on a person, the client
-or a date. Do not stop on a met count.
+**Stop when both hold:**
+- the re-score's "closable now" list is None: everything left waits on a person, the client or a date;
+- every main slide scores 4 or more on understanding and trust, or 4 interview rounds have run.
 
-On its first client run: 84 asks from two calls, five rounds in one evening, met went 38 → 62 → 65 → 67, and the loop
-stopped itself.
+Say which one stopped it. Happy at the round cap is not the same as passed. Do not stop on a met count.
 
-## How `/client-stand-ins` works
+On its first client run (before the two skills were joined), the checklist loop took 84 asks from two calls through
+five rounds in one evening; met went 38 → 62 → 65 → 67 over four strict re-scores, and the loop stopped itself.
 
-1. **Build a profile per client person** from their own words: call transcripts, call notes, email. Every claim carries
-   a dated quote; anything else is marked inferred. Usually two: the decision-maker and the data-minded sceptic.
-   Profiles live in `~/.claude/client-personas/`, **never in a repo**.
-2. **Render the deliverable** as the client will see it.
-3. **One top-tier agent per stand-in** reads only the profile and the rendered slides, and scores each slide 1–5 on
-   understanding, happiness and trust, with the exact words it did not understand and what it would check against its
-   own data.
-4. **You write the fix plan**, rebuild, re-check every number, and re-interview with the same prompt.
-5. **Stop** when every main slide scores 4 or more on understanding and trust, or after 4 rounds. Report which: happy
-   at the round cap is not the same as passed.
+## Who does what in a round
 
-## Why together
+| Step | Who |
+|---|---|
+| Brainstorm | you, or the strongest model |
+| Dig | strongest model, one per open ask that needs analysis |
+| Build the draft | strongest model |
+| Number check | cheaper model: trace every figure to a file, recompute every percentage |
+| Blind verify | cheaper model: its own query from source, never the dig's tables |
+| Strict re-score | strongest model, **never the builder** |
+| Stand-in interview | one top-tier agent per stand-in, given only its profile and the rendered slides |
+| Defaults | you |
 
-`/dig-till-done` makes sure the deliverable answers what was asked. `/client-stand-ins` makes sure the client can read
-it, believes it and knows what to do. Run the dig loop to its stop, then the stand-in rounds. Any stand-in fix that
-changes a number goes back through the number check.
+Stand-in profiles are built from each person's own dated words; anything else is marked inferred. They live in
+`~/.claude/client-personas/`, **never in a repo**.
 
 ## Traps both skills guard against
 
@@ -109,13 +112,17 @@ changes a number goes back through the number check.
 
 - Stand-ins are only as good as their profiles. With one short call behind a profile, expect guesses marked inferred.
 - A stand-in is not the client. It brings likely reactions forward; it does not replace showing the client.
-- It is token-heavy: a `/dig-till-done` round ran 5–6 agents and 55–90 minutes; two stand-ins over four rounds is up
-  to eight top-tier agents.
-- Built and tested on slide decks and results pages for one analytics client. Other deliverable types should work, but
-  have not been run.
+- It is token-heavy: a checklist round ran 5–6 agents and 55–90 minutes; two stand-ins over four rounds is up to eight
+  top-tier agents.
+- The joined loop (brainstorm step, stand-in questions as checklist rows, one stop rule) is the method as now written;
+  the two halves were first run separately. Built and tested on slide decks and results pages for one analytics
+  client. Other deliverable types should work, but have not been run.
 
 ## Version history
 
+- **1.1.0** (2026-11-25): the two skills become one loop that either can start. `dig-till-done` 2.0.0 adds a
+  brainstorm step and puts the stand-in interview inside verify; `client-stand-ins` 1.1.0 turns every question the
+  draft cannot answer into a checklist row. One shared stop rule. New 101-second film.
 - **1.0.0** (2026-11-24): first public release. `dig-till-done` 1.3.1 and `client-stand-ins` 1.0.0, both made generic
   from a client project, with every client name and figure removed.
 

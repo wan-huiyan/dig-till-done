@@ -7,9 +7,10 @@ description: |
   deliverable and scores every slide on understanding, trust and happiness. You fix, re-interview and repeat until
   every main slide scores 4 or more, or 4 rounds are done. Use when someone asks "would the client understand this?",
   "impersonate the client", "interview the client", "run the stand-ins", "would they trust this?", or before any deck
-  goes out. Pairs with /dig-till-done: that skill checks we answered what they asked; this one checks it lands.
+  goes out. Runs as one loop with /dig-till-done (either can start): that skill checks we answered what they
+  asked; this one checks it lands.
 author: "Huiyan Wan, built with Claude (Anthropic)"
-version: 1.0.0
+version: 1.1.0
 date: 2026-11-24
 ---
 
@@ -21,6 +22,37 @@ We review our own deliverables, and we already know the data, the definitions an
 So the first honest reaction to a deck used to arrive on the call: "I don't understand exactly what this is", "does
 this match my numbers?", "what do I do with this on Monday?". A stand-in brings that reaction forward, to a point where
 it is still cheap to fix.
+
+## One loop, two skills
+
+`/dig-till-done` and `/client-stand-ins` are two halves of one loop. Either can start it, and each calls the other at a
+fixed step. This section is the same, word for word, in both skills.
+
+1. **List requirements (once).** From the call transcripts and emails, write `checklist.md`: one row per ask, in the
+   client's own words, with the call date. From the same sources, write one profile per client person who will read
+   the deliverable.
+2. **Brainstorm.** For every open row: what analysis or page change would close it, in the client's own terms? The
+   input is the unmet rows plus the stand-ins' must-fix list from the last interview.
+3. **Dig.** Run the analyses, build the next draft, and trace every figure on it to a saved file.
+4. **Verify, two ways.**
+   - **Against the list:** blind-verify the figures from source, then re-score every row strictly, by an agent that did
+     not build the draft.
+   - **With the interview:** the stand-ins read the rendered draft and score each slide on understanding, trust and
+     happiness, and say what they would ask on the call.
+5. **Back to brainstorm.** The unmet rows, the stand-ins' must-fixes and any new question a stand-in asked (added as a
+   new row, with the stand-in as its source) become the next round's input. Take one default per open question so the
+   round can run; the human can overrule each.
+
+**Where you start:**
+- With `/dig-till-done`: the interview is part of step 4 in every round once there is a draft to render.
+- With `/client-stand-ins` on a draft that already exists: every stand-in question the draft cannot answer becomes a
+  checklist row, and the loop carries on from step 2.
+
+**Stop when both hold:** the re-score's "closable now" list is None, and every main slide scores 4 or more on
+understanding and trust (or 4 interview rounds have run). Report which. Happy at the round cap is not passed.
+
+This skill holds the detail of the profiles and the interview (below); `/dig-till-done` holds the checklist, the
+brainstorm, the dig and the re-score.
 
 ## Where profiles live: never in a repo
 
@@ -97,17 +129,10 @@ fixed with wording. Say so instead of rewording until it goes away.
 - **Fix it, never drop it.** An overnight fix "solved" stale clips by deleting 14 of 16 of them. A fix that removes the
   thing the stand-in liked is a regression, even when the scores hold.
 
-## With /dig-till-done
-
-The two skills answer different questions:
-- `/dig-till-done`: **did we answer what they asked?** It turns their asks into a checklist and loops dig, verify,
-  build, check and strict re-score until nothing is closable.
-- `client-stand-ins`: **will it land?** It finds what confuses them, what they would distrust and what they would ask.
-
-Run `/dig-till-done` to its stop first, then the stand-in rounds. Any stand-in fix that changes a number or a claim goes
-back through `/dig-till-done`'s number check before the next interview round.
-
 ## Changelog
 
 - 1.0.0, 2026-11-24: made generic from a single-client version, so the method works on any client. The steps, the
   stop rule and the traps come from that client's interview rounds of 19 and 23 Nov 2026.
+- 1.1.0, 2026-11-24: one loop with `/dig-till-done`, either skill can start it. The interview is part of the verify
+  step, every question the draft cannot answer becomes a checklist row, and both skills share one stop rule. The
+  "One loop, two skills" section is identical in both skills.
