@@ -19,7 +19,7 @@ jobs:
         with:
           python-version: "3.12"
       - name: Skill description cap gate
-        run: python3 plugins/dig-till-done/scripts/check_skill_descriptions.py plugins/dig-till-done --no-color --triggers
+        run: python3 plugins/no-ask-left-behind/scripts/check_skill_descriptions.py plugins/no-ask-left-behind --no-color --triggers
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
