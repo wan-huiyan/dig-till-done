@@ -19,13 +19,13 @@ one can start it:
 
 ![One loop, two skills](docs/promo.gif)
 
-The full 101-second film (silent, words on screen): [docs/promo.mp4](docs/promo.mp4).
+The full 140-second film (silent, words on screen): [docs/promo.mp4](docs/promo.mp4).
 
 ## The pain
 
 Two things kept going wrong with client work:
 
-1. **The draft answered a different question.** The asks were spread across hour-long calls, and "have we covered
+1. **Asks got lost.** The asks were spread across hour-long calls, and "have we covered
    everything?" was answered from memory. Some asks never made it onto any list.
 2. **We were the only reviewers, and we already knew the data.** The client's honest reaction ("I don't understand
    exactly what this is", "does this match my numbers?", "what do I do on Monday?") only arrived on the call.
@@ -83,7 +83,8 @@ You:    Interview the AI clients on this rendered deck.            ← /imposter
 Say which one stopped it. Happy at the round cap is not the same as passed. Do not stop on a met count.
 
 On its first client run (before the two skills were joined), the checklist loop took 84 asks from two calls through
-five rounds in one evening; met went 38 → 62 → 65 → 67 over four strict re-scores, and the loop stopped itself.
+five rounds in one evening (17 Nov 2026); met went 38 → 62 → 65 → 67 over four strict re-scores, and the loop stopped
+itself. Later rounds took it to 70 the next day; a sixth re-score, after slides were cut a day later, read 69.
 
 ## Who does what in a round
 
@@ -124,6 +125,9 @@ AI client profiles are built from each person's own dated words; anything else i
 
 ## Version history
 
+- **1.2.1** (2026-11-25): new 140-second film. It opens on a pile of client asks and our own question
+  ("have we delivered everything the client asked for?"), draws step 1 as a separate entry into the loop with step 5
+  going back to step 2, and ends on the real tally, 70 of 84 asks met. The first pain point is now "Asks got lost."
 - **1.2.0** (2026-11-25): renamed. `dig-till-done` → `no-ask-left-behind` (it names the goal: every client ask answered)
   and `client-stand-ins` → `imposter-client` (one of a family with `imposter-colleague`); "stand-in" → "AI client"
   throughout. Nothing in the method changed.
