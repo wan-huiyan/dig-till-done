@@ -126,7 +126,7 @@ fixed with wording. Say so instead of rewording until it goes away.
 - **"I trust it" is not verification.** Numbers still go through the number check.
 - **Text checks cannot see pictures.** An animated clip or chart image showed an old draft's numbers under a new
   heading, and every text check passed. Re-render and look at every image and clip after a fix.
-- **Fix it, never drop it.** An overnight fix "solved" stale clips by deleting 14 of 16 of them. A fix that removes the
+- **Fix it, never drop it.** An overnight fix "solved" stale clips by deleting 14 of 17 of them. A fix that removes the
   thing the stand-in liked is a regression, even when the scores hold.
 
 ## Changelog

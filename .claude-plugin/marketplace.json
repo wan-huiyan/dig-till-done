@@ -7,6 +7,6 @@
     "name": "dig-till-done",
     "source": "./plugins/dig-till-done",
     "description": "One loop, two skills, either can start it: dig-till-done (loop until every client ask is met or needs a person) + client-stand-ins (AI stand-ins for client staff score each slide on understanding, trust and happiness)",
-    "version": "1.1.0"
+    "version": "1.1.1"
   }]
 }

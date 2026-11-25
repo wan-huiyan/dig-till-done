@@ -195,9 +195,9 @@ rulings on a promptback page if there are more than three, each question carryin
   from draft v10; by v14 four of them showed numbers their own slide headings no longer said (an old pair of figures
   under a title quoting the new pair). The text checkers passed, because they cannot read video. Give every recorded asset a list of
   the figures it draws, and when any is missing from its section, **re-make it** (see "Fix derived content; never
-  drop it" above). Client stand-in reviewers reading the rendered pages (`client-stand-ins`) caught the mismatch; no
-  render check did. The first fix was wrong: an overnight default dropped every mismatched clip, and by the final
-  draft 14 of 16 were gone, the human's chosen favourite video among them, while two time-series charts the
+  drop it" above). We caught the mismatch only by re-reading every clip against the draft; no text or render check did.
+  (Stand-ins reading the rendered pages do catch slides that disagree with themselves, so run both.) The first fix was wrong: an overnight default dropped every mismatched clip, and by the final
+  draft 14 of 17 were gone, the human's chosen favourite video among them, while two time-series charts the
   story rested on had been folded into an appendix by another default. Nothing was lost on disk, but the deck the
   client would see had lost its best pictures, and the human had to ask where they went.
 - **Committing a list of paths from zsh:** `$files` does not word-split in zsh, so `git add $files` fails as one long
@@ -228,7 +228,7 @@ I do differently next time? Then:
 - **1.3.0, 2026-11-19.** The author: "instead of dropping content, we should be fixing them." Added "Fix derived content;
   never drop it" to the freeze step and rewrote the stale-clip trap: a mismatched clip or chart goes on a re-make
   list, hiding or removing content is a ruling for the human and never a default, and the report names every asset
-  shown static, hidden or moved. On the first run the drop rule had removed 14 of 16 clips and hidden two key charts.
+  shown static, hidden or moved. On the first run the drop rules had removed 14 of 17 clips and hidden two key charts.
 - **1.3.1, 2026-11-24.** Made shareable: client names, repo paths and the client's real figures removed. The worked
   example's location moved to the private client skill.
 - **2.0.0, 2026-11-24.** The author: the two skills should be usable interchangeably. The loop is now the five steps

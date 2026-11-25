@@ -101,8 +101,8 @@ Stand-in profiles are built from each person's own dated words; anything else is
 
 - **The builder marking its own work.** The re-score is always a different agent.
 - **Checks passed, picture wrong.** Text checks cannot read charts or video: a clip showed an old draft's numbers under
-  a new heading and every text check passed. A stand-in reading the rendered page caught it.
-- **Fix it, never drop it.** An overnight fix "solved" stale clips by deleting 14 of 16. Removing content is a ruling
+  a new heading and every text check passed. Only re-reading every clip against the draft caught it.
+- **Fix it, never drop it.** An overnight fix "solved" stale clips: the drop rules removed 14 of 17. Removing content is a ruling
   for the human, never a default.
 - **A stand-in that has read the repo** understands jargon the client never saw. Give it only the profile and the
   render.
@@ -120,6 +120,8 @@ Stand-in profiles are built from each person's own dated words; anything else is
 
 ## Version history
 
+- **1.1.1** (2026-11-25): two facts in the traps corrected. The overnight drop rules removed 14 of 17 clips, not
+  14 of 16, and the clip that showed an old draft's numbers was caught by re-reading every clip, not by a stand-in.
 - **1.1.0** (2026-11-25): the two skills become one loop that either can start. `dig-till-done` 2.0.0 adds a
   brainstorm step and puts the stand-in interview inside verify; `client-stand-ins` 1.1.0 turns every question the
   draft cannot answer into a checklist row. One shared stop rule. New 101-second film.
