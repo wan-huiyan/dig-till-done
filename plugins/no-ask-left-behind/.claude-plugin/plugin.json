@@ -1,7 +1,7 @@
 {
   "name": "no-ask-left-behind",
   "description": "One loop, two skills, either can start it: no-ask-left-behind (loop until every client ask is met or needs a person) + imposter-client (AI clients for client staff score each slide on understanding, trust and happiness)",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "author": { "name": "Huiyan Wan" },
   "repository": "https://github.com/wan-huiyan/no-ask-left-behind",
   "license": "MIT",
