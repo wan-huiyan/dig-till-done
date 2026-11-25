@@ -1,9 +1,9 @@
 ---
-name: dig-till-done
-description: "Use when a client deliverable (an analysis, a results page, a deck, a report) has to answer what the client actually asked for across one or more calls or emails, and the work should keep going until it does. Turns the client's asks into a durable numbered checklist from the transcripts, then loops: brainstorm what would close each open ask, dig, rebuild the draft, verify against the checklist (blind number checks, a strict re-score) and with AI client stand-ins (/client-stand-ins, either skill can start the loop), take a default on each open question, and go again, until the only items left need a human ruling, the client's own answer, or a date that has not come. Triggers: 'list his asks and check we met them', 'keep digging until his checklist is met', 'have we met the client's expectation?', 'run this in a loop with the client's asks as goals', 'review our output against what they asked'."
+name: no-ask-left-behind
+description: "Use when a client deliverable (an analysis, a results page, a deck, a report) has to answer what the client actually asked for across one or more calls or emails, and the work should keep going until it does. Turns the client's asks into a durable numbered checklist from the transcripts, then loops: brainstorm what would close each open ask, dig, rebuild the draft, verify against the checklist (blind number checks, a strict re-score) and with AI clients (/imposter-client, either skill can start the loop), take a default on each open question, and go again, until the only items left need a human ruling, the client's own answer, or a date that has not come. Triggers: 'list his asks and check we met them', 'keep digging until his checklist is met', 'have we met the client's expectation?', 'run this in a loop with the client's asks as goals', 'review our output against what they asked'."
 metadata:
   author: "Huiyan Wan, built with Claude (Anthropic)"
-  version: "2.0.0"
+  version: "2.1.0"
   created: "2026-11-17"
 ---
 
@@ -18,33 +18,33 @@ session or agent, and because the scoring is done by an agent that did not build
 
 ## One loop, two skills
 
-`/dig-till-done` and `/client-stand-ins` are two halves of one loop. Either can start it, and each calls the other at a
+`/no-ask-left-behind` and `/imposter-client` are two halves of one loop. Either can start it, and each calls the other at a
 fixed step. This section is the same, word for word, in both skills.
 
 1. **List requirements (once).** From the call transcripts and emails, write `checklist.md`: one row per ask, in the
    client's own words, with the call date. From the same sources, write one profile per client person who will read
    the deliverable.
 2. **Brainstorm.** For every open row: what analysis or page change would close it, in the client's own terms? The
-   input is the unmet rows plus the stand-ins' must-fix list from the last interview.
+   input is the unmet rows plus the AI clients' must-fix list from the last interview.
 3. **Dig.** Run the analyses, build the next draft, and trace every figure on it to a saved file.
 4. **Verify, two ways.**
    - **Against the list:** blind-verify the figures from source, then re-score every row strictly, by an agent that did
      not build the draft.
-   - **With the interview:** the stand-ins read the rendered draft and score each slide on understanding, trust and
+   - **With the interview:** the AI clients read the rendered draft and score each slide on understanding, trust and
      happiness, and say what they would ask on the call.
-5. **Back to brainstorm.** The unmet rows, the stand-ins' must-fixes and any new question a stand-in asked (added as a
-   new row, with the stand-in as its source) become the next round's input. Take one default per open question so the
+5. **Back to brainstorm.** The unmet rows, the AI clients' must-fixes and any new question an AI client asked (added as a
+   new row, with the AI client as its source) become the next round's input. Take one default per open question so the
    round can run; the human can overrule each.
 
 **Where you start:**
-- With `/dig-till-done`: the interview is part of step 4 in every round once there is a draft to render.
-- With `/client-stand-ins` on a draft that already exists: every stand-in question the draft cannot answer becomes a
+- With `/no-ask-left-behind`: the interview is part of step 4 in every round once there is a draft to render.
+- With `/imposter-client` on a draft that already exists: every AI client question the draft cannot answer becomes a
   checklist row, and the loop carries on from step 2.
 
 **Stop when both hold:** the re-score's "closable now" list is None, and every main slide scores 4 or more on
 understanding and trust (or 4 interview rounds have run). Report which. Happy at the round cap is not passed.
 
-The rest of this skill is the detail of each step. `/client-stand-ins` holds the detail of the interview and the
+The rest of this skill is the detail of each step. `/imposter-client` holds the detail of the interview and the
 profiles.
 
 ## 1. List requirements (once)
@@ -54,9 +54,9 @@ Read every transcript and email in full (subagents for long ones; tell them to q
 
 | Column | What goes in it |
 |---|---|
-| ID | A prefix per source, numbered: `M01` the main client contact's asks and facts, `B01` other client staff, `P01` process asks (dates, calls, sends), `S01` questions a stand-in raised that the draft could not answer |
+| ID | A prefix per source, numbered: `M01` the main client contact's asks and facts, `B01` other client staff, `P01` process asks (dates, calls, sends), `S01` questions an AI client raised that the draft could not answer |
 | Ask | The ask in plain words |
-| Quote | Verbatim, with call date and timestamp (for `S` rows: the stand-in's words and the round). An ask without a quote is your inference: mark it so |
+| Quote | Verbatim, with call date and timestamp (for `S` rows: the AI client's words and the round). An ask without a quote is your inference: mark it so |
 | Status | One of the fixed statuses below. The ONLY column the loop edits |
 | Evidence | Where on the deliverable it is met (slide, sentence) |
 
@@ -67,7 +67,7 @@ Put a glossary at the top for the transcript's mishearings (names, product names
 
 ⚠️ If a script builds the checklist, run it ONCE. Re-running it resets every status the loop has written.
 
-From the same sources, write the stand-in profiles (`/client-stand-ins`, step 1), so both halves of the loop rest on the
+From the same sources, write the AI client profiles (`/imposter-client`, step 1), so both halves of the loop rest on the
 same quotes.
 
 ## Each round, step by step
@@ -77,7 +77,7 @@ Each item is a separate agent, except where noted. State agent count and tier be
 ### 2. Brainstorm
 
 You, inline, or one strongest-model agent. For every `not met: not done` row, every `not met: analysis done, not on
-page` row and every stand-in must-fix from the last interview, write one line: the idea that would close it, in the
+page` row and every AI client must-fix from the last interview, write one line: the idea that would close it, in the
 client's own terms, and whether it needs a dig (new analysis) or only a page edit.
 
 ### 3. Dig
@@ -85,7 +85,7 @@ client's own terms, and whether it needs a dig (new analysis) or only a page edi
 1. **Dig** (only for rows that need analysis; strongest model, one dig per ask). Each dig writes its SQL, outputs and a
    `results.md`.
 2. **Build draft vN** (strongest model) from the previous draft plus: the last number check's problems, the last
-   re-score's "closable now" list, the stand-ins' must-fixes, the defaults files, and the verifier results. Unverified
+   re-score's "closable now" list, the AI clients' must-fixes, the defaults files, and the verifier results. Unverified
    figures get a removable marker ("still being re-checked"), keyed by name so it can come off cleanly once a blind
    check clears it. Earlier drafts stay untouched.
 3. **Number check** (cheaper model): trace every figure to a saved file, recompute every percentage, check wording
@@ -105,16 +105,16 @@ Against the list:
 
 With the interview:
 
-3. **Stand-in interview** (`/client-stand-ins`, one top-tier agent per stand-in, given only its profile and the rendered
+3. **AI client interview** (`/imposter-client`, one top-tier agent per AI client, given only its profile and the rendered
    draft). Each slide is scored on understanding, trust and happiness. Their must-fixes go to step 5. A figure a
-   stand-in distrusts goes to the blind check; it is never fixed by rewording alone.
+   AI client distrusts goes to the blind check; it is never fixed by rewording alone.
 
 ### 5. Back to brainstorm
 
 1. **Defaults file** (you, inline): for every open question the round raised, take ONE default so the next round
    can run, numbered continuously across rounds (`13-round3-defaults.md`, `16-round4-defaults.md`, …). Each is the
    human's to overrule.
-2. **New rows:** every stand-in question the draft could not answer becomes an `S` row in `checklist.md`.
+2. **New rows:** every AI client question the draft could not answer becomes an `S` row in `checklist.md`.
 3. **Commit** the round by named paths. **Look at the changed screens yourself.**
 
 What each open item turns into next round:
@@ -123,7 +123,7 @@ What each open item turns into next round:
 |---|---|
 | not met: not done | A brainstorm line, then a dig (step 3) |
 | not met: analysis done, not on page | A page edit in the build (step 3) |
-| stand-in must-fix | A brainstorm line, then a page edit or a dig |
+| AI client must-fix | A brainstorm line, then a page edit or a dig |
 | needs ruling | A default in the defaults file, and a line in the final rulings table |
 | client's side | A chase line on the page, or a line in the human's cover note |
 | not yet due | Nothing until its date |
@@ -196,7 +196,7 @@ rulings on a promptback page if there are more than three, each question carryin
   under a title quoting the new pair). The text checkers passed, because they cannot read video. Give every recorded asset a list of
   the figures it draws, and when any is missing from its section, **re-make it** (see "Fix derived content; never
   drop it" above). We caught the mismatch only by re-reading every clip against the draft; no text or render check did.
-  (Stand-ins reading the rendered pages do catch slides that disagree with themselves, so run both.) The first fix was wrong: an overnight default dropped every mismatched clip, and by the final
+  (AI clients reading the rendered pages do catch slides that disagree with themselves, so run both.) The first fix was wrong: an overnight default dropped every mismatched clip, and by the final
   draft 14 of 17 were gone, the human's chosen favourite video among them, while two time-series charts the
   story rested on had been folded into an appendix by another default. Nothing was lost on disk, but the deck the
   client would see had lost its best pictures, and the human had to ask where they went.
@@ -220,10 +220,10 @@ I do differently next time? Then:
   empty "closable now" list. The traps above are the ones that cost a round or a correction there.
 - **1.1.0, 2026-11-17.** Added "After the stop: freeze one final draft". Round 5 left five small fixes, one of them a
   false sentence on a main slide, and the decks' number checker was still pointed at a draft four versions old.
-- **1.1.1, 2026-11-17.** Renamed from `chase-that-ask` to `dig-till-done` (author's pick).
+- **1.1.1, 2026-11-17.** Renamed from `chase-that-ask` to `no-ask-left-behind` (author's pick).
 - **1.2.0, 2026-11-19.** Added the trap about derived artefacts freezing an old draft (stale clips). The overnight
-  loop ran four rounds with client stand-in interviews after each deck build; each round's must-fix list came from the
-  stand-ins, not the checkers, and cheap text slips (restarted list numbering, a heading over the wrong content, a
+  loop ran four rounds with AI client interviews after each deck build; each round's must-fix list came from the
+  AI clients, not the checkers, and cheap text slips (restarted list numbering, a heading over the wrong content, a
   self-contradicting sentence) were the items they said would embarrass them most.
 - **1.3.0, 2026-11-19.** The author: "instead of dropping content, we should be fixing them." Added "Fix derived content;
   never drop it" to the freeze step and rewrote the stale-clip trap: a mismatched clip or chart goes on a re-make
@@ -232,6 +232,8 @@ I do differently next time? Then:
 - **1.3.1, 2026-11-24.** Made shareable: client names, repo paths and the client's real figures removed. The worked
   example's location moved to the private client skill.
 - **2.0.0, 2026-11-24.** The author: the two skills should be usable interchangeably. The loop is now the five steps
-  the author uses (list requirements, brainstorm, dig, verify two ways, back to brainstorm), with the stand-in interview
-  inside verify, stand-in questions fed back as `S` rows, and one stop rule covering both. The "One loop, two skills"
-  section is identical in `/client-stand-ins`.
+  the author uses (list requirements, brainstorm, dig, verify two ways, back to brainstorm), with the AI client interview
+  inside verify, AI client questions fed back as `S` rows, and one stop rule covering both. The "One loop, two skills"
+  section is identical in `/imposter-client`.
+- **2.1.0, 2026-11-25.** Renamed from `dig-till-done`; its partner skill `client-stand-ins` is now `imposter-client`, and
+  "stand-in" is now "AI client". Nothing in the method changed.

@@ -9,8 +9,8 @@ import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const PLUGIN = "dig-till-done";
-const SKILLS = ["dig-till-done", "client-stand-ins"];
+const PLUGIN = "no-ask-left-behind";
+const SKILLS = ["no-ask-left-behind", "imposter-client"];
 
 const marketplacePath = resolve(ROOT, ".claude-plugin/marketplace.json");
 const pluginPath = resolve(ROOT, `plugins/${PLUGIN}/.claude-plugin/plugin.json`);
