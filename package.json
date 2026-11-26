@@ -1,6 +1,6 @@
 {
   "name": "no-ask-left-behind",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Two Claude Code skills for client deliverables: no-ask-left-behind + imposter-client, one loop",
   "type": "module",
   "scripts": { "test": "node --test tests/*.test.mjs" },
