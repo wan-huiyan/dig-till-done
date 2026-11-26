@@ -19,7 +19,7 @@ one can start it:
 
 ![One loop, two skills](docs/promo.gif)
 
-The full 145-second film (silent, words on screen): [docs/promo.mp4](docs/promo.mp4).
+The full 85-second film (silent, words on screen): [docs/promo.mp4](docs/promo.mp4).
 
 ## The pain
 
@@ -125,6 +125,10 @@ AI client profiles are built from each person's own dated words; anything else i
 
 ## Version history
 
+- **1.2.3** (2026-11-26): new 85-second film, back to the shorter story and its flat, bold-colour look. It now
+  matches the skills: the checklist rows are requirements in plain words with the call each came from, the loop has
+  the five steps (step 1 on its own, 5 going back to 2), the tally runs to 70 of 84, and the AI clients are built
+  from their own calls. The chart and the scores on screen are marked as examples.
 - **1.2.2** (2026-11-26): new 145-second film that tells one skill at a time. It shows `/no-ask-left-behind`
   in full (requirements as rows, the loop, a separate checker, the tally, the stop rule), then the turning point
   ("checks passed, picture wrong"), then `/imposter-client`, and ends on the two loops joining as an AI client's
