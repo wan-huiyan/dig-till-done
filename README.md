@@ -19,8 +19,6 @@ one can start it:
 
 ![One loop, two skills](docs/promo.gif)
 
-The full 85-second film (silent, words on screen): [docs/promo.mp4](docs/promo.mp4).
-
 ## The pain
 
 Two things kept going wrong with client work:
