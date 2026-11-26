@@ -28,8 +28,8 @@ it is still cheap to fix.
 `/no-ask-left-behind` and `/imposter-client` are two halves of one loop. Either can start it, and each calls the other at a
 fixed step. This section is the same, word for word, in both skills.
 
-1. **List requirements (once).** From the call transcripts and emails, write `checklist.md`: one row per ask, in the
-   client's own words, with the call date. From the same sources, write one profile per client person who will read
+1. **List requirements (once).** From the call transcripts and emails, write `checklist.md`: one row per ask: the ask in
+   plain words, with the client's exact quote and the call date. From the same sources, write one profile per client person who will read
    the deliverable.
 2. **Brainstorm.** For every open row: what analysis or page change would close it, in the client's own terms? The
    input is the unmet rows plus the AI clients' must-fix list from the last interview.

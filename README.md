@@ -19,7 +19,7 @@ one can start it:
 
 ![One loop, two skills](docs/promo.gif)
 
-The full 140-second film (silent, words on screen): [docs/promo.mp4](docs/promo.mp4).
+The full 145-second film (silent, words on screen): [docs/promo.mp4](docs/promo.mp4).
 
 ## The pain
 
@@ -69,7 +69,7 @@ You:    Interview the AI clients on this rendered deck.            ← /imposter
 
 | Step | What goes in | What comes out | Detail lives in |
 |---|---|---|---|
-| **1. List requirements** (once) | call transcripts, call notes, emails | `checklist.md`: one row per ask, in the client's own words, with the call it came from; one AI client profile per client person, from the same sources | both |
+| **1. List requirements** (once) | call transcripts, call notes, emails | `checklist.md`: one row per ask: the ask in plain words, with the client's exact quote and the call it came from; one AI client profile per client person, from the same sources | both |
 | **2. Brainstorm** | the open rows, plus the AI clients' must-fixes from the last interview | one line per item: what would close it in the client's terms, and whether it needs a new analysis or only a page edit | `/no-ask-left-behind` |
 | **3. Dig** | the brainstorm lines | the analyses, the next draft, and every figure on it traced to a saved file | `/no-ask-left-behind` |
 | **4. Verify, against the list** | the new draft | each new finding redone by another agent without seeing the answer; every row re-scored by an agent that did not build the draft, against what the client will see | `/no-ask-left-behind` |
@@ -125,6 +125,11 @@ AI client profiles are built from each person's own dated words; anything else i
 
 ## Version history
 
+- **1.2.2** (2026-11-26): new 145-second film that tells one skill at a time. It shows `/no-ask-left-behind`
+  in full (requirements as rows, the loop, a separate checker, the tally, the stop rule), then the turning point
+  ("checks passed, picture wrong"), then `/imposter-client`, and ends on the two loops joining as an AI client's
+  question becomes a new row. The checklist shows each ask as a requirement in plain words, and the step 1 summary
+  says the same ("the ask in plain words, with the client's exact quote").
 - **1.2.1** (2026-11-25): new 140-second film. It opens on a pile of client asks and our own question
   ("have we delivered everything the client asked for?"), draws step 1 as a separate entry into the loop with step 5
   going back to step 2, and ends on the real tally, 70 of 84 asks met. The first pain point is now "Asks got lost."
